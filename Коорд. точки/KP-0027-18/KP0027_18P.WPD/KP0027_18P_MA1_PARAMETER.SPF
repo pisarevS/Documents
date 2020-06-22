@@ -1,0 +1,79 @@
+;************************************************
+;Hegenscheidt MFD
+;Wheel: KP-0027-18, USA, d=711.2 mm
+;last change: 30.07.2018
+;************************************************
+;PROGRAM-TYPE: Parameter Program
+;VERSION: 1.0
+;************************************************
+
+;**********************************
+;* SETTING UP MACHINING VARIABLES *
+;**********************************
+;THESE THREE VALUES ARE ESSENTIAL FOR
+;ZERO POINT SHIFT CALCULATION.
+N_WHEEL_UNMACHINED=151
+N_WHEEL_MACHINED=143.7
+;SYMMETRIC-FACTOR FOR SHIFTING THE FINAL PART INSIDE THE RAW PART
+;<0.5 MORE ALLOWANCE FOR SIDE 1 BUT LESS FOR SIDE 2.
+;=0.5 ALLOWANCE FOR SIDE 1 AND 2 IS EQUAL.
+;>0.5 SMALLER ALLOWANCE FOR SIDE 1 BUT MORE FOR SIDE 2.
+N_SYM_FACTOR=0.5
+STOPRE
+
+TREAD_DIAM=(716.4/2)
+WHEEL_HEIGHT=N_WHEEL_MACHINED
+STOPRE
+TREAD_HEIGHT_S2=74.23
+TREAD_HEIGHT_S1=WHEEL_HEIGHT-TREAD_HEIGHT_S2
+
+GLOBAL_ALLOWANCE=0
+TREAD_ALLOWANCE=0.3
+
+BORE_DIAM=110/2
+
+VYLET_ST=0
+STUPICA_VNUT=0
+STUPICA_NAR=0
+
+DISK_VNUT=0
+DISK_NAR=0
+
+YABLOKO_VNUT=0
+YABLOKO_NAR=0
+
+N_CHUCK_JAWS=1 ;TYPE OF CHUCK JAWS USED, 0...4 ALLOWED
+;************************************************
+; DECLARATION OF THE WOKRING RANGE OF THE CHUCK *
+;************************************************
+; fully opened: 0
+; fully closed: 80
+;Positions machining side one
+N_CHUCK_CLAMPED_S1=44
+N_CHUCK_UNCLAMPED_S1=28
+;Positions machining side two
+N_CHUCK_CLAMPED_S2=75
+N_CHUCK_UNCLAMPED_S2=60
+;**************************************************
+;* POSITION OF MAIN SPINDLE FOR AUTOMATIC LOADING *
+;**************************************************
+N_SPOS_GANTRY=0
+N_SPOS_GANTRY_LOWER=358
+N_SPOS_GANTRY_UPPER=2
+;*********************************
+;* PARAMETERS FOR CHUCK FLUSHING *
+;*********************************
+N_WITH_FLUSHING=TRUE ;Chuck-Flushing can be (de)activated here
+N_FLUSHTIME=10        ;time for flushing (s)
+N_FLUSH_SPSPEED=10   ;spindle speed during flush
+N_FLUSHPOS_X=450     ;Position X-Axis
+N_FLUSHPOS_Z=430     ;Position Y-Axis
+N_FLUSHPOS_U=340     ;Position U-Axis
+N_FLUSHPOS_W=430     ;Position W-Axis
+;******************
+;* AUX PARAMETERS *
+;******************
+N_WITH_APP_MON=TRUE ;PNEUMATIC APPLIANCE MONITORING ON
+
+STOPRE
+M17

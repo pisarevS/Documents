@@ -1,0 +1,83 @@
+;*********************************************
+;Hegenscheidt MFD
+;Wheel: KP-0027-18, USA, d=711.2 mm (CHISTOVAYA)
+;last change: 02.08.2018
+;************************************************
+;PROGRAM-TYPE: Machining Program
+;CHANNEL: 2 (LEFT)
+;MACHINING SIDE: 1
+;VERSION: 1.2
+;************************************************
+N100 DEF INT _SPEC_WP=184
+N110 DEF REAL V_CUT=100
+;********
+;* INIT *
+;********
+N120 CLEARM ;for testing purposes
+N130 N_CHKCH(2) ;in channel 2?
+;    N_CHKWP(_SPEC_WP)
+
+N140 IF NOT N_TWOCHANNELS
+N150 MSG("WARNING, CHANNEL-SYNC VIA N_TWOCHANNELS DESELECTED! PRESS NC-START TO MACHINE...")
+N160 M0
+N170 MSG("")
+N180 ENDIF
+;***********************
+;VYZOV NULEVOY TOCHKI
+;***********************
+N250 G58 U=0 W=N_CHUCK_HEIGHT_W_S1[N_CHUCK_JAWS] ;RAW
+N260 G59 U=N_WP_ZP_U_S1 W=N_WP_ZP_W_S1 ;FINE
+
+N_WAITM(2)
+
+N350 G96 M4 S120 LIMS=120
+N360 G0 G40 U=86.631+10 W=WHEEL_HEIGHT+27
+;*********************************
+;TORCOVKA STUPICY #1
+;*********************************
+N400 M810 M28
+N410 OFFN=GLOBAL_ALLOWANCE
+N420 G1 G41 U=86.631+5 W=WHEEL_HEIGHT+3.835+17 F=1.1 M7 M8
+N430    U=BORE_DIAM-10 W=WHEEL_HEIGHT+3.835+17 F=1.2
+N450 M800 M29 ;Artis
+
+N460 G0 G40 W=WHEEL_HEIGHT+3.835+100 M9
+N470    U=91.303+10
+N480 G0 G40 W=WHEEL_HEIGHT+3.835+10
+;*********************************
+;TORCOVKA STUPICY #2
+;*********************************
+N400 M815 M28
+N410 OFFN=GLOBAL_ALLOWANCE
+N420 G1 G41 U=91.303 W=WHEEL_HEIGHT+3.835+10 F=1.1 M7 M8
+N430    U=BORE_DIAM-10 W=WHEEL_HEIGHT+3.835+10 F=1.2
+N450 M800 M29 ;Artis
+
+N460 G0 G40 W=WHEEL_HEIGHT+3.835+100 M9
+N470    U=91.303+10
+N480 G0 G40 W=WHEEL_HEIGHT+3.835+12
+;*********************************
+;TORCOVKA STUPICY #3
+;*********************************
+N400 M810 M28
+N410 OFFN=GLOBAL_ALLOWANCE
+N420 G1 G41 U=91.303 W=WHEEL_HEIGHT+3.835+3 F=1.1 M7 M8
+N430    U=BORE_DIAM-10 W=WHEEL_HEIGHT+3.835+3 F=1.2
+N450 M800 M29 ;Artis
+
+N460 G0 G40 W=WHEEL_HEIGHT+3.835+100 M9
+
+  SETM(4)
+N620  G60 G153 D0 U=N_GANTRYPOS_U W=N_GANTRYPOS_W
+N630 STOPRE
+;************************************************
+;MACHINING CH2 FINISHED, WAIT FOR FINISHING CH1
+;************************************************
+  N_WAITM(5)
+N1300 M22
+N1330 N_SPOS(N_SPOS_GANTRY)
+SETM(3)
+;*********************
+;*END OF SUBPROGRAM*
+;*********************
+N1020 M17

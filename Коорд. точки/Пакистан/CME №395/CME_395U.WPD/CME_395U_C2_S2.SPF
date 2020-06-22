@@ -1,0 +1,96 @@
+;************************************************
+;Hegenscheidt MFD
+;Wheel: CME-395 PAKISTAN
+;last change: 28.12.2015 by DIS
+;************************************************
+;PROGRAM-TYPE: Machining Program
+;CHANNEL: 2 (LEFT)
+;MACHINING SIDE: 1
+;VERSION: 1.0
+;************************************************
+N100 DEF INT _SPEC_WP=158
+N110 DEF REAL V_CUT=80
+;********
+;* INIT *
+;********
+N120 CLEARM ;for testing purposes
+N130 N_CHKCH(2) ;in channel 2?
+;    N_CHKWP(10)
+;N140 N_CHKTWOCHANNELS
+
+N150 T103
+N160 L6
+N170 DIAMOF
+N180 N_LIFTOFF_DIR=0 ;liftoff W+
+N190 STOPRE
+N200 N_ENABLE
+
+;CALL ZERO POINT SHIFT
+N210 G58 U=0 W=N_CHUCK_HEIGHT_W_S2[N_CHUCK_JAWS] ;RAW (CHUCK HEIGHT)
+N220 G59 U=N_WP_ZP_U_S2 W=N_WP_ZP_W_S2 ;FINE (ALLOWANCE)
+
+N230 G96 M4 S=V_CUT
+N240 G0 G40 U=394.062-10 W=WHEEL_HEIGHT+10
+
+N240 N_WAITM(1) ;WAIT FOR START MACHINING
+
+;************************************************
+;OT YABLOKA CUT#1
+;************************************************
+
+N250 M851 M28 ;Artis
+N260 OFFN=GLOBAL_ALLOWANCE
+N280 G1 G41 U=394.062+YABLOKO_NAR W=WHEEL_HEIGHT F=1.2 M7 M8
+N290 G2 U=391.261+YABLOKO_NAR W=132.075 CR=3 F=0.6
+N300 G1 U=384.484+YABLOKO_NAR W=114.419 F=1.1
+N300 G3 U=338.855 W=74.480+DISK_NAR CR=65 F=1.3
+N310 G2 U=271.239 W=41.086+DISK_NAR CR=169 F=1.2
+N320 G3 U=244.491 W=24.247+DISK_NAR CR=130 F=1.3
+N325       U=220.991 W=15.831+DISK_NAR+0.2 CR=130 F=1.3
+N330 G4S1 M800 M29 ;Artis
+
+G0 G40 G603 G641 W=WHEEL_HEIGHT+200
+
+N_WAITM(4) 
+
+;************************************************
+;MOVE TO OUTER BOTTOM #2
+;************************************************
+N370 G0 G40 U=BORE_DIAM-20 
+N375 G60 W=109
+;************************************************
+;OT STUPICY CUT#1
+;************************************************
+N380 G96 M4 S=95
+N390 M855 M28
+N400 OFFN=GLOBAL_ALLOWANCE
+N410 G1 G42 U=BORE_DIAM-10 W=109 F=1.4
+N415       U=133.451+STUPICA_NAR  W=109 F=1.2
+N420 G3  U=138.342+STUPICA_NAR  W=105.04 CR=5 F=0.6
+N430 G1 U=147.591+STUPICA_NAR  W=61.525 F=1.4
+N440 G2 U=220.991 W=15.831+DISK_NAR CR=60 F=1.5
+N450  U=244.491 W=24.247+DISK_NAR+0.5 CR=130 F=1.4
+N460 M800 M29 ;Artis
+
+;************************************************
+;MOVE TO LOADING POSITION/WAIT FOR CH1
+;************************************************
+N470 G0 G40 G603 G641 ADISPOS=25 OFFN=0
+N480  G153 D0 W=N_GANTRYPOS_W
+N490  G60 G153 U=N_GANTRYPOS_U M9
+N500 STOPRE
+N510 N_DISABLE
+
+N515 SETM(7)
+
+N580 N_WAITM(9) ;_WAIT FOR HUB BORE MACHINED/CLEARANCE M41_
+
+N590 IF N_TWOCHANNELS
+N600  N_M41
+N610  N_SPOS(N_SPOS_GANTRY)
+N620 ENDIF
+M22
+;*********************
+;*END OF SUBPROGRAM*
+;*********************
+N630 M17

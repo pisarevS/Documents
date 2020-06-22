@@ -1,0 +1,68 @@
+;************************************************
+;Wheel: KP-0077-12.A PROFIL EN13715-S1002/H28/E32.5/6.7%
+;NTZ: KP-0077-12.A IRAN
+;last change: 15.07.2016 by DIS
+;************************************************
+N_WHEEL_UNMACHINED=147
+N_WHEEL_MACHINED=135
+
+N_SYM_FACTOR=0.5
+STOPRE
+
+TREAD_DIAM=(923)/2
+WHEEL_HEIGHT=N_WHEEL_MACHINED
+STOPRE
+TREAD_HEIGHT_S2=70
+TREAD_HEIGHT_S1=WHEEL_HEIGHT-TREAD_HEIGHT_S2
+
+GLOBAL_ALLOWANCE=0
+TREAD_ALLOWANCE=0.3
+
+BORE_DIAM=177/2
+
+VYLET_ST=0
+
+STUPICA_VNUT=0
+STUPICA_NAR=0
+
+DISK_VNUT=0
+DISK_NAR=0
+
+YABLOKO_VNUT=0
+YABLOKO_NAR=0
+
+N_CHUCK_JAWS=1 ;TYPE OF CHUCK JAWS USED, 0...4 ALLOWED
+;************************************************
+; DECLARATION OF THE WOKRING RANGE OF THE CHUCK *
+;************************************************
+; fully opened: 0
+; fully closed: 80
+;Positions machining side one
+N_CHUCK_CLAMPED_S1=39
+N_CHUCK_UNCLAMPED_S1=22
+;Positions machining side two
+N_CHUCK_CLAMPED_S2=65.8
+N_CHUCK_UNCLAMPED_S2=43
+;**************************************************
+;* POSITION OF MAIN SPINDLE FOR AUTOMATIC LOADING *
+;**************************************************
+N_SPOS_GANTRY=0
+N_SPOS_GANTRY_LOWER=358
+N_SPOS_GANTRY_UPPER=2
+;*********************************
+;* PARAMETERS FOR CHUCK FLUSHING *
+;*********************************
+N_WITH_FLUSHING=TRUE ;FALSE;Chuck-Flushing can be (de)activated here
+N_FLUSHTIME=7       ;time for flushing (s)
+N_FLUSH_SPSPEED=12 ;spindle speed during flush
+N_FLUSHPOS_X=550     ;Position X-Axis
+N_FLUSHPOS_Z=430     ;Position Y-Axis
+N_FLUSHPOS_U=440     ;Position U-Axis
+N_FLUSHPOS_W=430    ;Position W-Axis
+;******************
+;* AUX PARAMETERS *
+;******************
+N_WITH_APP_MON=TRUE ;PNEUMATIC APPLIANCE MONITORING ON
+
+STOPRE
+M17
